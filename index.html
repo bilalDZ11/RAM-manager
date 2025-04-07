@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Windows XP - Fatal Error</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #0000AA;
+      color: #FFFFFF;
+      font-family: 'Lucida Console', monospace;
+      font-size: 18px;
+      line-height: 1.5;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    #countdown {
+      color: #FF5555;
+      font-weight: bold;
+      font-size: 22px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <p>A problem has been detected and Windows has been shut down to prevent damage<br>to your computer.</p>
+    <p>DRIVER_IRQL_NOT_LESS_OR_EQUAL</p>
+    <p>If this is the first time you've seen this Stop error screen,<br>restart your computer. If this screen appears again, follow<br>these steps:</p>
+    <p>Check to make sure any new hardware or software is properly installed.<br>If this is a new installation, ask your hardware or software manufacturer<br>for any Windows updates you might need.</p>
+    <p>If problems continue, disable or remove any newly installed hardware<br>or software. Disable BIOS memory options such as caching or shadowing.<br>Use Safe Mode to remove or disable components.</p>
+    <p>Technical information:<br>*** STOP: 0x000000D1 (0x00000000, 0x00000002, 0x00000001, 0xF86B5A89)</p>
+    <p>Collecting error information, please wait...</p>
+    <p id="countdown">30</p>
+  </div>
+
+  <script>
+    let seconds = 30;
+    const countdownEl = document.getElementById('countdown');
+
+    function startCountdown() {
+      const interval = setInterval(() => {
+        seconds--;
+        countdownEl.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(interval);
+          exitFullscreen();
+          alert("😂 مقلبناااااااك ! يمكنك الخروج الآن.");
+        }
+      }, 1000);
+    }
+
+    function enterFullscreen() {
+      const el = document.documentElement;
+      if (el.requestFullscreen) {
+        el.requestFullscreen();
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+      } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+      }
+    }
+
+    function exitFullscreen() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+
+    // يمنع الإغلاق قبل نهاية الوقت
+    window.onbeforeunload = function () {
+      if (seconds > 0) {
+        return "لا يمكنك الخروج الآن!";
+      }
+    };
+
+    window.onload = () => {
+      enterFullscreen();
+      startCountdown();
+    };
+  </script>
+</body>
+</html>
